@@ -1164,5 +1164,588 @@ console.log(headings[0])
 6) HTML collection
 7) document.write()
 
+--------------------------------------------20/2/2024------------------------------------------
 
-##
+
+### Attribute node & Text node
+
+# Attribute node là các thuộc tính của các tag
+
+# Text node là các ký tự được ghi trong các tag
+
+
+
+
+### DOM attribute
+var headingElement = document.querySelector('h1')
+
+headingElement.title = 'Heading'
+
+# ==> Thêm attribute vào các thẻ hợp lệ nhưng chỉ được thực thi khi chạy trên JS
+
+
+
+
+
+
+var headingElement = document.querySelector('h1')
+
+headingElement.setAttribute('class', 'heading')
+# ==> Đối số thứ nhất là tên attribute, đối số thứ hai là giá trị attribute muốn set
+
+
+
+var headingElement = document.querySelector('h1')
+
+console.log(headingElement.getAttribute('class'))
+# ==> Lấy giá trị của attribute ra
+
+
+
+headingElement.title 
+# ==> attribute phải hợp lệ với element đó ms sử dụng được
+
+
+
+
+
+------------------------------------------26/2/2024--------------------------------------
+
+
+### InnerText vs textContent
+
+
+var headingElement = document.querySelector('.heading')
+
+
+console.log(headingElement.innerText)
+# => Lấy ra giá trị được gọi là getter
+
+
+
+
+# Có thể thay đổi text
+var headingElement = document.querySelector('.heading')
+
+
+headingElement.innerText = 'Hello Dung'
+
+
+# => Thay đổi nội dung đc gọi là setter
+
+
+
+## innerText : trả lại cái gì nhìn thấy được
+var headingElement = document.querySelector('.heading')
+
+
+console.log(headingElement.innerText)
+console.log(headingElement.textContent)
+
+
+## textConntent: Trả lại những gì thât sự lầ text node ở bên trong
+
+
+# ==> 2 thằng này ko dùng để thêm element node 
+
+
+
+
+### InnerHTML vs OuterHTML Property
+
+## InnerHTML: Thêm thẻ mới vào trong thẻ đó
+var boxElement = document.querySelector('.box')
+
+
+boxElement.innerHTML = '<h1>Heading</h1>'
+
+console.log(document.querySelector('h1').innerHTML)
+
+# ==> Có thể thêm cả thẻ và thuộc tính
+
+
+
+
+## OuterHTML: Ghi đè lên chính thẻ đó
+
+var boxElement = document.querySelector('.box')
+
+
+boxElement.outerHTML = '<span>Helloo</span>'
+
+console.log(boxElement) // ÍT khi sử dụng outerHTML
+
+
+-------------------------------28/2/2024---------------------------------
+
+
+### Node prototype
+
+# Mỗi thuộc tính có chung và riêng cho từng node
+ví dụ textContent là thuộc tính chung cho Element, Attribute,text node 
+
+
+
+### DOM CSS
+
+
+var boxElement = document.querySelector('.box')
+// Có thể thêm css
+boxElement.style.width = '100px'
+boxElement.style.height = '100px'
+boxElement.style.backgroundColor = 'red'
+
+
+// Sử dụng để gom nhiều dòng cho gọn
+Object.assign(boxElement.style, {
+    width: '100px',
+    height: '100px',
+    backgroundColor: 'red'
+})
+
+
+
+--------------------------------------5/3/2024----------------------------------
+
+
+## ClassList Property
+
+# add: thêm class vao element
+
+# contains: Kt 1 class có nằm trong element
+
+# remove: Xóa bỏ class khỏi element
+
+# toggle: Phương thức toggle dùng để thêm class được chỉ định vào element nếu class đó chưa xuất hiện và xóa bỏ class đó nếu đã xuất hiện
+
+===> Là những thuộc tính thường dùng
+
+# add: Thêm class
+boxElement.classList.add('red', 'blue')
+
+
+# contains: Kiểm tra class
+console.log(boxElement.classList.contains('red'))// kiểm tra class red có tồn tại ko.
+
+
+# toggle: Phương thức toggle dùng để thêm class được chỉ định vào element nếu class đó chưa xuất hiện và xóa bỏ class đó nếu đã xuất hiện
+boxElement.classList.toggle('red')// Kiểm tra nếu có class red thì xóa còn ko có thì thêm vào
+
+
+# ==> Ứng dụng toggle có thể làm các nút đóng mở
+
+
+
+
+### DOM Event
+
+1) Atribute events
+
+    <h1 onclick="console.log(this)"><span>HTML</span></h1> // Vẫn trả ra kết quả HTML (Này đc gọi là sự kiên nôi bọt: như thả bong bóng vô nc nó cứ nổi lên)
+
+    
+2) Assin event using the element node
+
+
+var h1Element = document.querySelector('h1')
+
+h1Element.onclick = function(e) {
+    console.log(e.target)
+}
+
+# ==> e chính là sự kiên click còn .target sẽ trả về chính element mà đang lắng nghe event này
+
+
+
+
+var h1Element = document.querySelectorAll('h1')
+
+
+for (var i = 0; i < h1Element.length; i++) {
+    h1Element[i].onclick = function(e) {
+        console.log(e.target) 
+    }
+}
+
+# ==> không sử dụng biến bên ngoài mà phải sử dụng e.target
+
+
+
+
+
+### DOM event example
+
+1) Input / select
+<!DOCTYPE html>
+<html lang="en">
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <title>HTML DOM</title>
+</head>
+
+<body>
+    <input type="text">
+    <input type="checkbox">
+
+    <select>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+</body>
+<script src="./main.js "></script>
+
+
+
+</html>
+
+
+var inputValue
+
+
+var inputElement = document.querySelector('select');
+
+inputElement.onchange = function(e) {
+    console.log(e.target.value)
+}
+
+
+
+2) Key up / down
+// down: ấn cái ra luôn
+var inputElement = document.querySelector('input[type="text"]');
+
+inputElement.onkeydown = function(e) {
+    console.log(e.target.value)
+}
+
+
+
+
+//up: buôn nút trên bàn phím mới hiện
+
+var inputElement = document.querySelector('input[type="text"]');
+
+inputElement.onkeyup = function(e) {
+    console.log(e.which)
+
+    switch (e.which) {
+        case 27:
+            console.log('Exit')
+            break;
+    }
+
+}
+
+//onkeypress: ấn giữ nút nào nút đó chạy liên tục
+# => .which chính là vị trí nút trên bàn phím mà mình vừa bấm
+
+
+
+
+
+
+### PreventDefault and StopPropagation
+
+1) preventDefault: loại bỏ hành vi mặt định của trình duyệt trên thẻ html
+
+# Ví dụ 1:
+
+
+ var aElement = document.links
+
+
+ for (var i = 0; i < aElement.length; ++i) {
+     aElement[i].onclick = function(e) {
+
+
+         if (!e.target.href.startsWith('https://fullstack.edu.vn/')) {
+             e.preventDefault()
+         }
+
+     }
+ }
+
+# Ví dụ 2:
+<!DOCTYPE html>
+<html lang="en">
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <title>HTML DOM</title>
+</head>
+<style>
+    ul {
+        display: none
+    }
+    
+    input:focus~ul {
+        display: block;
+    }
+</style>
+
+<body>
+    <input placeholder="Tim kieems" />
+
+    <ul>
+        <li>JS</li>
+        <li>PHP</li>
+        <li>Java</li>
+    </ul>
+</body>
+<script src="./main.js "></script>
+
+
+
+</html>
+
+var ulElement = document.querySelector('ul')
+
+ulElement.onmousedown = function(e) {
+    e.preventDefault()
+
+}
+
+ulElement.onclick = function(e) {
+    console.log(e.target)
+}
+
+
+
+
+2) stopPropagation: Loại bỏ sự kiện nổi bọt
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <title>HTML DOM</title>
+</head>
+<style>
+    ul {
+        display: none
+    }
+    
+    input:focus~ul {
+        display: block;
+    }
+</style>
+
+<body>
+    <div onclick="console.log('DIV')">
+
+        DIV
+        <button onclick="console.log('CLik me')">clickme</button>
+    </div>
+</body>
+<script src="./main.js "></script>
+
+
+
+</html>
+
+
+document.querySelector('div').onclick = function() {
+    console.log('DIV')
+}
+
+document.querySelector('button').onclick = function(e) {
+    e.stopPropagation()
+    console.log('Click me')
+}
+
+
+
+### Event listener
+
+1) xử lý nhiều việc khi 1 event xảy ra
+
+var btn = document.getElementById('btn')
+
+btn.onclick = function() {
+    console.log('Viec 1')
+
+    console.log('Viec 2')
+
+    alert('Viec 3')
+}
+
+setTimeout(function() {
+    btn.onclick = function() {}
+}
+
+# ==> có thể hủy bỏ sự kiện DOM event đó là gán lại bằng 1 function rỗng
+
+
+2) Lắng nghe / Hủy bỏ lắng nghe
+
+# .addEventListener(Tên Event,function callback sẽ thực hiện khi event này xãy ra)
+
+var btn = document.getElementById('btn')
+
+btn.addEventListener('click', function(e) {
+    console.log('Event 1')
+})
+btn.addEventListener('click', function(e) {
+    console.log('Event 2')
+})
+btn.addEventListener('click', function(e) {
+    console.log('Event 3')
+})
+
+#  mỗi addEventListener gọi một cái callback sẽ đc gọi là thứ tự ông nào trc thì gọi trc
+ ==> Tường minh dễ hiểu hơn
+
+
+
+var btn = document.getElementById('btn')
+
+function viec1() {
+    console.log('Viec 1')
+}
+
+btn.addEventListener('click', viec1)
+
+
+# Cũng có thể hủy bỏ một sự kiện nào đó
+
+var btn = document.getElementById('btn')
+
+function viec1() {
+    console.log('Viec 1')
+}
+
+btn.addEventListener('click', viec1)
+
+
+setTimeout(function() {
+    btn.removeEventListener('click', viec1)
+}, 300)
+
+
+##  ==>Chúng ta nên sử dụng DOM event trong trường hợp muốn lắng nghe một sự kiện nào đó mà ko có nhu cầu gở bỏ đi
+
+
+##  ==> Sử lý nhiều việc vẫn có thể sử dụng DOM event  những dài quá có thể đổi sang addEventListener
+
+
+##  ==>Chúng ta nên sử dụng addeventlistener trong trường hợp muốn lắng nghe một sự kiện nào đó mà có nhu cầu gở bỏ đi
+
+
+---------------------------------------8/3/2024------------------------------------
+
+
+### JSON
+
+1) Là một định dạng dữ liệu (chuỗi)
+2) Được viết tắt JavaScrippt Object Notation
+3) JSON: Number, Boolean, Null, Array
+
+object
+
+# Stringify: Từ Javascript types -> JSON
+console.log(JSON.stringify({
+    name: 'Dung Le',
+    age: '18'
+}))
+# Parse: Từ JSON -> Javascript types
+var json = '{"name":"Dung Le", "age":"18"}'
+
+
+var obj = JSON.parse(json)
+
+
+var json = '["JS","PHP"]'
+
+var json = '{"name":"Dung Le", "age":"18"]'
+
+
+
+
+
+### Promise
+
+1) Sync: Đồng bộ
+
+console.log(1)
+console.log(2)
+==> thằng nào viết trc chạy trc
+
+
+2) Async: Bất đồng bộ
+## Các thao tác bất đồng bộ:
+ # setTimeout,setInterval,fetch
+ # XMLHttpRequest,file reading,
+ # request animation frame
+
+
+## JS cung cấp callback để sử lý các thao tác bát đồng bộ
+
+
+
+
+### Promise(pain)
+Callback hell
+
+setTimeout(function() {
+            console.log(1)
+            setTimeout(function() {
+                    console.log(2)
+                    setTimeout(function() {
+                            console.log(3)
+                            setTimeout(function() {
+                                    console.log(4)
+                                })
+                            })
+                    })
+            })
+
+
+
+
+### Promise(concept)
+# 2 bước để tạo ra promise:
+1) khởi tạo ( new Promise)
+2) tạo ra Executor(trong đây phải gọi 1 trong 2 thằng resolve hoặc reject)
+
+var promise = new Promise(
+    // Executor
+    function(resolve, reject) {
+        //resolve: thanh cong
+        //reject: that bai
+    })
+# ==> khi ko gọi resolve hay reject thì thằng Promise đang trong trạng thái chờ(Penđing) ==> Làm rò rĩ bộ nhớ
+
+# thằng promise sẽ trả ra  
+1) .then(function(){})  ==>  Khi resolve này được gọi
+
+
+2) .catch(function(){})  ==> Khi reject này được gọi
+
+
+3) .finally(function(){})  ==> Khi 1 trong resolve hoặc reject này được gọi
+
+
+
+
+#### ==> Traloi phỏng vấn : Promise thường sử dụng để sử lý thao tác bất đồng bộ, trc khi có Promise a sử dụng callback thì sẽ xảy ra callback hell gây rỗi rám khó hiểu. Thằng Promise đc sinh ra trong phiên bản ES6 của js để khác phục tình trạng callback hell. Và để sự dụng promise thì ta sẽ sử dụng từ khóa new để tao ra promise và trong constructor của nó thì truyền vào một Executor function sẽ nhận đc 2 tham số dưới dạng hàm khi mà nó thực thi 1 là resolve sẽ sử lý khi thao tác thành công và 2 là reject khi thao tác thất bại khi thằng promise tạo ra sẽ sự dụng phương thức .then khi promise resolve hoặc .catch khi reject 
+
+
+
+
+
+
+
+
+
